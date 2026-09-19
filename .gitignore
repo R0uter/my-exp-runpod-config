@@ -1,2 +1,4 @@
 .hermes
 .env
+__pycache__/
+.superpowers/
