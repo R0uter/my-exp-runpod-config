@@ -16,3 +16,9 @@ llama-server behind a tiny Perl LB router (`GET /ping` + `/health`, proxy everyt
 Create a **new** load-balancer endpoint from this template in the console. Do not convert `zey2nnrdthsweh`.
 
 Auth: `Authorization: Bearer $LLM_KEY`
+
+```bash
+python3 test-lb.py                  # HTTP probes (.env LLM_KEY)
+./test-lb-status.sh                 # runpodctl get + health
+LOGS=1 ./test-lb-status.sh          # include logs
+```
