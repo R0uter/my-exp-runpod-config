@@ -15,6 +15,20 @@ llama-server behind a tiny Perl LB router (`GET /ping` + `/health`, proxy everyt
 
 Create a **new** load-balancer endpoint from this template in the console. Do not convert `zey2nnrdthsweh`.
 
+## Cached model
+
+```
+https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf:main
+```
+
+`--model-reference` form. Resolved snapshot we used:
+
+```
+https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf:6ed5e12bf84b7a63069882c91dd9e9218647d17b
+```
+
+File: `Ternary-Bonsai-2-27B-PQ2_0.gguf`
+
 Auth: `Authorization: Bearer $LLM_KEY`
 
 ```bash
