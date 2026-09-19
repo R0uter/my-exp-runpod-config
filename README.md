@@ -1,18 +1,18 @@
 # orcabonsai-27b-200k
 
-RunPod serverless serving for Ternary-Bonsai-2-27B GGUF (llama-server HTTP, ctx 200000).
+llama-server behind a tiny Perl LB router (`GET /ping` + `/health`, proxy everything else). Not vLLM/FastAPI.
 
 ## Image
 
 `ghcr.io/letechlead/orcabonsai-27b-serving@sha256:45ebd198fe02fd8f62b04bf728beee771221dbe26b6ce1533b7a90e7cd0ed3b2`
 
-## Template
+## Template for Load Balancer
 
-- name: `orcabonsai-27b-200k`
-- id: `p8gbv4cgo8`
-- HTTP port: `8080`
-- Health: `GET /health` (llama-server; not `/ping`)
+- name: `orcabonsai-27b-200k-lb`
+- id: `tlfsr6ujse`
+- port: `8080`
+- health: `GET /ping` (204 while llama loads, 200 after)
 
-## Endpoint
+Create a **new** load-balancer endpoint from this template in the console. Do not convert `zey2nnrdthsweh`.
 
-Queue endpoint `t2n1os1fnkdc5n` was deleted. `runpodctl` cannot create a load-balancer endpoint. Create one in the console from this template (Endpoint Type = Load Balancer).
+Auth: `Authorization: Bearer $LLM_KEY`
