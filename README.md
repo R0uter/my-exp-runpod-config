@@ -1,6 +1,6 @@
 # orcabonsai-27b-200k
 
-RunPod serverless serving for Ternary-Bonsai-2-27B GGUF.
+RunPod serverless serving for Ternary-Bonsai-2-27B GGUF (llama-server HTTP, ctx 200000).
 
 ## Image
 
@@ -10,17 +10,9 @@ RunPod serverless serving for Ternary-Bonsai-2-27B GGUF.
 
 - name: `orcabonsai-27b-200k`
 - id: `p8gbv4cgo8`
+- HTTP port: `8080`
+- Health: `GET /health` (llama-server; not `/ping`)
 
 ## Endpoint
 
-- name: `orcabonsai-27b-200k`
-- id: `t2n1os1fnkdc5n`
-- GPU: NVIDIA A40 (`gpuIds` also lists NVIDIA RTX A6000)
-- workers min/max: 0 / 1
-- flashboot: true
-- idle timeout: 300s
-- execution timeout: 600s
-- scalerType: `QUEUE_DELAY` (Queue, not Load Balancer)
-- health: https://api.runpod.ai/v2/t2n1os1fnkdc5n/health
-- run: https://api.runpod.ai/v2/t2n1os1fnkdc5n/run
-- runsync: https://api.runpod.ai/v2/t2n1os1fnkdc5n/runsync
+Queue endpoint `t2n1os1fnkdc5n` was deleted. `runpodctl` cannot create a load-balancer endpoint. Create one in the console from this template (Endpoint Type = Load Balancer).
