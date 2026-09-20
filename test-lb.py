@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Probe a RunPod load-balancer endpoint.
 
-Reads LLM_KEY from .env (never printed). Endpoint id from argv, else ENDPOINT_ID, else z7rmwbm5ac8cow.
+Reads LLM_KEY from .env (never printed). Endpoint id from argv, else ENDPOINT_ID, else zbvtollsf5emjd.
 
   python3 test-lb.py
-  python3 test-lb.py z7rmwbm5ac8cow
+  python3 test-lb.py zbvtollsf5emjd
 """
 from __future__ import annotations
 
@@ -17,7 +17,7 @@ import urllib.request
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent
-DEFAULT_ID = "z7rmwbm5ac8cow"
+DEFAULT_ID = "zbvtollsf5emjd"
 
 
 def load_env() -> dict[str, str]:

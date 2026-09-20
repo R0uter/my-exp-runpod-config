@@ -1,7 +1,7 @@
 #!/bin/sh
 # RunPod worker status for an LB endpoint. Id from $1 or $ENDPOINT_ID.
 set -eu
-ID=${1:-${ENDPOINT_ID:-z7rmwbm5ac8cow}}
+ID=${1:-${ENDPOINT_ID:-zbvtollsf5emjd}}
 runpodctl serverless get "$ID"
 echo "==== health ===="
 runpodctl serverless health "$ID"

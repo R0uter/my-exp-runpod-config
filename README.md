@@ -1,38 +1,43 @@
 # orcabonsai-27b-200k
 
-llama-server behind a tiny Perl LB router (`GET /ping` + `/health`, proxy everything else). Not vLLM/FastAPI.
+llama-server behind a Perl LB router (`GET /ping` + `/health`, proxy everything else). Not vLLM/FastAPI.
 
-## Image
+Works. Call the load-balancer URL with Bearer auth.
 
-`ghcr.io/letechlead/orcabonsai-27b-serving@sha256:45ebd198fe02fd8f62b04bf728beee771221dbe26b6ce1533b7a90e7cd0ed3b2`
+## Live
 
-## Template for Load Balancer
+- endpoint: `zbvtollsf5emjd` (`orcabonsai-27b-200k-img`)
+- image: `ghcr.io/r0uter/orcabonsai-27b-runpod@sha256:30c56c9031de55cf1df78b3794309536a6e36da130a400baf534f2803ff34aa4`
+- template: `2f3h0nxlqq` (console clone; start-cmd empty — boot is image `ENTRYPOINT /lb-boot.sh`)
+- port `8080`, ctx `200000`, LoRA alpha `1.0`, min CUDA `13.1`
 
-- name: `orcabonsai-27b-200k-lb`
-- id: `tlfsr6ujse`
-- port: `8080`
-- health: `GET /ping` (204 while llama loads, 200 after)
-
-Create a **new** load-balancer endpoint from this template in the console. Do not convert `zey2nnrdthsweh`.
-
-## Cached model
+## API
 
 ```
-https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf:main
+https://zbvtollsf5emjd.api.runpod.ai/v1/chat/completions
+Authorization: Bearer <LLM_KEY>
 ```
 
-`--model-reference` form. Resolved snapshot we used:
-
-```
-https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf:6ed5e12bf84b7a63069882c91dd9e9218647d17b
-```
-
-File: `Ternary-Bonsai-2-27B-PQ2_0.gguf`
-
-Auth: `Authorization: Bearer $LLM_KEY`
+Do **not** use `https://api.runpod.ai/v2/<id>/openai/v1`.
 
 ```bash
 python3 test-lb.py                  # HTTP probes (.env LLM_KEY)
 ./test-lb-status.sh                 # runpodctl get + health
 LOGS=1 ./test-lb-status.sh          # include logs
 ```
+
+## Model (RunPod cache)
+
+```
+https://huggingface.co/prism-ml/Ternary-Bonsai-2-27B-gguf:main
+```
+
+File: `Ternary-Bonsai-2-27B-PQ2_0.gguf`
+
+## Rebuild
+
+```bash
+docker build --platform linux/amd64 -t ghcr.io/r0uter/orcabonsai-27b-runpod .
+```
+
+Keep template start-cmd empty. Console LB deploy strips it; the baked ENTRYPOINT still runs.
